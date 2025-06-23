@@ -9,6 +9,7 @@ import {
   AlertTriangle,
   Calendar,
   FileText,
+  Target,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { format, subDays, isAfter, isBefore, startOfMonth, endOfMonth, eachMonthOfInterval, subMonths } from 'date-fns';
@@ -126,7 +127,7 @@ export function Analytics() {
       {/* Обзорная статистика */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-6 md:mb-8">
         <StatCard
-          icon={FileText}
+          icon={Target}
           title="ВСЕГО ЗАДАЧ"
           value={totalTasks}
           subtitle={`${completionRate}% ВЫПОЛНЕНО`}
@@ -159,13 +160,13 @@ export function Analytics() {
         {/* Распределение по статусам */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
           <h3 className="text-md md:text-lg font-semibold text-gray-900 mb-4 flex items-center space-x-2">
-            <PieChart className="w-4 h-4 md:w-5 md:h-5" style={{ color: '#fbffab' }} />
+            <PieChart className="w-4 h-4 md:w-5 md:h-5" style={{ color: '#4ade80' }} />
             <span className="uppercase">РАСПРЕДЕЛЕНИЕ ПО СТАТУСАМ</span>
           </h3>
           <div className="space-y-3 md:space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 md:w-4 md:h-4 bg-gray-300 rounded"></div>
+                <div className="w-3 h-3 md:w-4 md:h-4 rounded" style={{ backgroundColor: '#c2e1fc' }}></div>
                 <span className="text-xs md:text-sm text-gray-700 uppercase">СОЗДАНО</span>
               </div>
               <div className="flex items-center space-x-2">
@@ -220,18 +221,22 @@ export function Analytics() {
           </div>
         </div>
 
-        {/* Месячная статистика с визуальным представлением */}
+        {/* Месячная статистика с вертикальными колонками */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
           <h3 className="text-md md:text-lg font-semibold text-gray-900 mb-4 flex items-center space-x-2">
             <BarChart3 className="w-4 h-4 md:w-5 md:h-5" style={{ color: '#90ee90' }} />
             <span className="uppercase">СТАТИСТИКА ПО МЕСЯЦАМ</span>
           </h3>
           
-          {/* Визуальное представление с диаграммами */}
+          {/* Вертикальные колонки */}
           <div className="space-y-4 mb-4">
             {monthlyStats.slice(-6).map((stat, index) => {
               const maxTasks = Math.max(...monthlyStats.map(s => s.total));
-              const barWidth = maxTasks > 0 ? (stat.total / maxTasks) * 100 : 0;
+              const maxHeight = 120; // максимальная высота в пикселях
+              
+              const createdHeight = maxTasks > 0 ? (stat.created / maxTasks) * maxHeight : 0;
+              const inProgressHeight = maxTasks > 0 ? (stat.inProgress / maxTasks) * maxHeight : 0;
+              const completedHeight = maxTasks > 0 ? (stat.completed / maxTasks) * maxHeight : 0;
               
               return (
                 <div key={index} className="space-y-2">
@@ -239,17 +244,55 @@ export function Analytics() {
                     <span className="font-medium text-gray-900 uppercase">{stat.month}</span>
                     <span className="text-gray-600">{stat.total} задач</span>
                   </div>
-                  <div className="relative">
-                    <div className="w-full bg-gray-200 rounded-full h-3">
+                  
+                  {/* Вертикальные колонки */}
+                  <div className="flex items-end space-x-2 h-32">
+                    {/* Создано */}
+                    <div className="flex flex-col items-center flex-1">
                       <div 
-                        className="bg-gradient-to-r from-blue-400 to-green-400 h-3 rounded-full transition-all duration-500"
-                        style={{ width: `${barWidth}%` }}
+                        className="w-full rounded-t transition-all duration-500"
+                        style={{ 
+                          backgroundColor: '#c2e1fc',
+                          height: `${createdHeight}px`,
+                          minHeight: stat.created > 0 ? '8px' : '0px'
+                        }}
                       ></div>
+                      <div className="text-xs text-gray-500 mt-1 text-center">
+                        <div className="font-medium">{stat.created}</div>
+                        <div className="uppercase">СОЗДАНО</div>
+                      </div>
                     </div>
-                    <div className="flex justify-between text-xs text-gray-500 mt-1">
-                      <span>Создано: {stat.created}</span>
-                      <span>В процессе: {stat.inProgress}</span>
-                      <span>Выполнено: {stat.completed}</span>
+                    
+                    {/* В процессе */}
+                    <div className="flex flex-col items-center flex-1">
+                      <div 
+                        className="w-full rounded-t transition-all duration-500"
+                        style={{ 
+                          backgroundColor: '#fcfac2',
+                          height: `${inProgressHeight}px`,
+                          minHeight: stat.inProgress > 0 ? '8px' : '0px'
+                        }}
+                      ></div>
+                      <div className="text-xs text-gray-500 mt-1 text-center">
+                        <div className="font-medium">{stat.inProgress}</div>
+                        <div className="uppercase">В ПРОЦЕССЕ</div>
+                      </div>
+                    </div>
+                    
+                    {/* Выполнено */}
+                    <div className="flex flex-col items-center flex-1">
+                      <div 
+                        className="w-full rounded-t transition-all duration-500"
+                        style={{ 
+                          backgroundColor: '#c4fcc2',
+                          height: `${completedHeight}px`,
+                          minHeight: stat.completed > 0 ? '8px' : '0px'
+                        }}
+                      ></div>
+                      <div className="text-xs text-gray-500 mt-1 text-center">
+                        <div className="font-medium">{stat.completed}</div>
+                        <div className="uppercase">ВЫПОЛНЕНО</div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -272,7 +315,7 @@ export function Analytics() {
             {userTaskStats.map((user, index) => {
               const efficiency = user.total > 0 ? Math.round((user.completed / user.total) * 100) : 0;
               return (
-                <div key={index} className="bg-gray-50 rounded-lg p-3">
+                <div key={index} className="rounded-lg p-3" style={{ backgroundColor: '#ffcfda' }}>
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center space-x-2">
                       <div className="w-6 h-6 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-xs font-medium">
@@ -315,7 +358,7 @@ export function Analytics() {
           // Десктопная версия - таблица
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="border-b border-gray-200" style={{ backgroundColor: '#a4d2fc' }}>
+              <thead className="border-b border-gray-200" style={{ backgroundColor: '#ffcfda' }}>
                 <tr>
                   <th className="text-left py-3 px-4 font-medium text-gray-700 uppercase">ПОЛЬЗОВАТЕЛЬ</th>
                   <th className="text-center py-3 px-4 font-medium text-gray-700 uppercase">ВСЕГО</th>

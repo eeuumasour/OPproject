@@ -8,6 +8,7 @@ import {
   Trash2,
   Crown,
   AlertCircle,
+  Target,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { User } from '../types';
@@ -125,7 +126,7 @@ export function UserManagement() {
             <button
               onClick={() => setShowAddUser(true)}
               className="flex items-center space-x-1 text-gray-800 px-3 py-2 rounded-xl font-medium uppercase text-sm"
-              style={{ backgroundColor: '#CFE8FF' }}
+              style={{ backgroundColor: '#add8ff' }}
             >
               <UserPlus className="w-4 h-4" />
               <span>ДОБАВИТЬ</span>
@@ -171,7 +172,7 @@ export function UserManagement() {
                     type="text"
                     value={formData.username}
                     onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#CFE8FF] focus:border-[#CFE8FF] transition-colors"
+                    className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#add8ff] focus:border-[#add8ff] transition-colors"
                     placeholder="ВВЕДИТЕ ИМЯ ПОЛЬЗОВАТЕЛЯ"
                     required
                   />
@@ -185,7 +186,7 @@ export function UserManagement() {
                 <select
                   value={formData.role}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value as 'admin' | 'user' })}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#CFE8FF] focus:border-[#CFE8FF] transition-colors uppercase"
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#add8ff] focus:border-[#add8ff] transition-colors uppercase"
                 >
                   <option value="user">ПОЛЬЗОВАТЕЛЬ</option>
                   <option value="admin">АДМИНИСТРАТОР</option>
@@ -196,7 +197,7 @@ export function UserManagement() {
                 <button
                   type="submit"
                   className="text-gray-800 px-6 py-2 rounded-xl font-medium uppercase"
-                  style={{ backgroundColor: '#CFE8FF' }}
+                  style={{ backgroundColor: '#add8ff' }}
                 >
                   {editingUser ? 'ОБНОВИТЬ' : 'ДОБАВИТЬ'}
                 </button>
@@ -239,7 +240,7 @@ export function UserManagement() {
                       <div className="font-medium text-gray-900 flex items-center space-x-2">
                         <span className="uppercase">{user.firstName} {user.lastName}</span>
                         {isCurrentUser && (
-                          <span className="text-xs px-2 py-1 rounded-full uppercase" style={{ backgroundColor: '#CFE8FF', color: '#1e40af' }}>
+                          <span className="text-xs px-2 py-1 rounded-full uppercase" style={{ backgroundColor: '#add8ff', color: '#1e40af' }}>
                             ВЫ
                           </span>
                         )}
@@ -300,7 +301,7 @@ export function UserManagement() {
         <div className="flex items-center space-x-3">
           <Users className="w-6 h-6 text-blue-600" />
           <h2 className="text-2xl font-bold text-gray-900 uppercase">УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ</h2>
-          <span className="text-blue-700 px-3 py-1 rounded-full text-sm font-medium uppercase" style={{ backgroundColor: '#CFE8FF' }}>
+          <span className="text-blue-700 px-3 py-1 rounded-full text-sm font-medium uppercase" style={{ backgroundColor: '#add8ff' }}>
             {boardUsers.length} ПОЛЬЗОВАТЕЛЕЙ
           </span>
         </div>
@@ -309,7 +310,7 @@ export function UserManagement() {
           <button
             onClick={() => setShowAddUser(true)}
             className="flex items-center space-x-2 text-gray-800 px-4 py-2 rounded-xl font-medium uppercase"
-            style={{ backgroundColor: '#CFE8FF' }}
+            style={{ backgroundColor: '#add8ff' }}
           >
             <UserPlus className="w-5 h-5" />
             <span>ДОБАВИТЬ ПОЛЬЗОВАТЕЛЯ</span>
@@ -341,7 +342,7 @@ export function UserManagement() {
                   type="text"
                   value={formData.username}
                   onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#CFE8FF] focus:border-[#CFE8FF] transition-colors"
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#add8ff] focus:border-[#add8ff] transition-colors"
                   placeholder="ВВЕДИТЕ ИМЯ ПОЛЬЗОВАТЕЛЯ"
                   required
                 />
@@ -355,7 +356,7 @@ export function UserManagement() {
               <select
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value as 'admin' | 'user' })}
-                className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#CFE8FF] focus:border-[#CFE8FF] transition-colors uppercase"
+                className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#add8ff] focus:border-[#add8ff] transition-colors uppercase"
               >
                 <option value="user">ПОЛЬЗОВАТЕЛЬ</option>
                 <option value="admin">АДМИНИСТРАТОР</option>
@@ -366,7 +367,7 @@ export function UserManagement() {
               <button
                 type="submit"
                 className="text-gray-800 px-6 py-2 rounded-xl font-medium uppercase"
-                style={{ backgroundColor: '#CFE8FF' }}
+                style={{ backgroundColor: '#add8ff' }}
               >
                 {editingUser ? 'ОБНОВИТЬ РОЛЬ' : 'ДОБАВИТЬ В ДОСКУ'}
               </button>
@@ -386,7 +387,7 @@ export function UserManagement() {
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="border-b border-gray-200" style={{ backgroundColor: '#ffcfda' }}>
+            <thead className="border-b border-gray-200" style={{ backgroundColor: '#add8ff' }}>
               <tr>
                 <th className="text-left py-4 px-6 font-medium text-gray-700 uppercase">ПОЛЬЗОВАТЕЛЬ</th>
                 <th className="text-left py-4 px-6 font-medium text-gray-700 uppercase">ВЫПОЛНЕНО</th>
@@ -426,7 +427,7 @@ export function UserManagement() {
                           <div className="font-medium text-gray-900 flex items-center space-x-2">
                             <span className="uppercase">{user.firstName} {user.lastName}</span>
                             {isCurrentUser && (
-                              <span className="text-xs px-2 py-1 rounded-full uppercase" style={{ backgroundColor: '#CFE8FF', color: '#1e40af' }}>
+                              <span className="text-xs px-2 py-1 rounded-full uppercase" style={{ backgroundColor: '#add8ff', color: '#1e40af' }}>
                                 ВЫ
                               </span>
                             )}

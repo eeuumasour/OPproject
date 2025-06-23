@@ -12,6 +12,7 @@ import {
   Trash2,
   User,
   Mic,
+  Target,
 } from 'lucide-react';
 import { Task, User as UserType } from '../types';
 import { format, isAfter, isBefore, startOfDay } from 'date-fns';
@@ -136,6 +137,7 @@ export function TaskCard({ task, users, onClick, className = '' }: TaskCardProps
             task.status === 'completed' ? 'text-green-600' :
             task.status === 'in-progress' ? 'text-blue-600' : 'text-gray-500'
           }`} />
+          <Target className="w-3 h-3 flex-shrink-0 text-gray-400" />
           <span className={`px-2 py-1 rounded-full text-xs font-medium border flex-shrink-0 ${priorityColors[task.priority]} ${priorityTextColors[task.priority]}`}>
             {priorityLabels[task.priority]}
           </span>
